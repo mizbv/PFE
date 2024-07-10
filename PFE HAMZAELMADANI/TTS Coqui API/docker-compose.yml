@@ -1,0 +1,25 @@
+version: '3.11'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    command: flask run
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use the same Dockerfile if dependencies are similar
+    volumes:
+      - .:/app
+    ports:
+      - "8501:8501"  # Map Streamlit's default port 8501 to the host
+    command: streamlit run streamlit.py
